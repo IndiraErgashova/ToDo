@@ -1,0 +1,73 @@
+body{
+    background: url('https://cdn.create.vista.com/api/media/medium/266166242/stock-photo-abstract-bright-background-similar-lightning?token=') center / cover no-repeat;
+}
+
+.container{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.row{
+    width: 340px;
+    height: 300px;
+    box-shadow: 0 0 20px #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.card h3{
+    text-align: center;
+    font-size: 25px;
+    color: white;
+}
+
+.card div{
+    margin: 10px 0;
+}
+
+input{
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    border-color: #ddd;
+}
+
+
+.emailInput.active{
+    border-color: red;
+}
+.passwordInput.active{
+    border-color: red;
+}
+
+
+.btnreg{
+    display: flex;
+    justify-content: center;
+}
+button{
+    border: 0;
+    padding: 5px 20px;
+    background-color: rgb(250, 250, 250);
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.switch{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.switch a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
