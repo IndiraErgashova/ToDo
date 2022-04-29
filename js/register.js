@@ -2,7 +2,7 @@ const $email = document.querySelector('.emailInput')
 const $password = document.querySelector('.passwordInput')
 const $btnRegister = document.querySelector('.btnRegister')
 
-const base_url = 'https://todo-itacademy.herokuapp.com/api'
+const base_url = 'https://todo-itacademy.herokuapp.com/'
 
 // https://todo-itacademy.herokuapp.com/api/registration
 // https://todo-itacademy.herokuapp.com/api/login
@@ -18,31 +18,34 @@ function getRegister(){
             password: $password.value
         }),
         headers: {
-            'content-type':'application/json'
+            'Content-type':'application/json'
         }
     })
     .then(res => res.json())
     .then(res => {
-        // localStorage.setItem('accessToken' , res.accessToken)
-        // localStorage.setItem('refreshToken' , res.refreshToken)
-        // localStorage.setItem('userId' , res.userId)
-        console.log(res);
+        localStorage.setItem('accessToken' , res.accessToken)
+        localStorage.setItem('refreshToken' , res.refreshToken)
+        localStorage.setItem('userId' , res.user.id)
+        localStorage.setItem('isActivated' , res.user.isActivated)
+        window.open('../auth.html' , '_self')
+    })
+    .finally(() => {
+        $btnRegister.disabled = false
     })
 
 }
 
+window.addEventListener('DOMContentLoaded' , () => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    if(accessToken){
+        window.open('./auth.html' , '_self')
+    }
+})
+
 $btnRegister.addEventListener('click' , e => {
     e.preventDefault()
 
-
-    if($email.value.length === 0 || $password.value.length === 0){
-        if($email.value.length === 0){
-            $email.classList.add('active')
-        }
-        if($password.value.length === 0){
-            $password.classList.add('active')
-        }
-    }else{
-        getRegister()
-    }
+    $btnRegister.disabled = true
+    getRegister()
 })

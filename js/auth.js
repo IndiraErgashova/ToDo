@@ -1,13 +1,13 @@
 const $email = document.querySelector('.emailInput')
 const $password = document.querySelector('.passwordInput')
-const $btnRegister = document.querySelector('.btnRegister')
+const $submit = document.querySelector('.submit')
 
 const base_url = 'https://todo-itacademy.herokuapp.com/api'
 
 
 
 
-function getRegister(){
+function getAuth(){
     fetch(`${base_url}/login`, {
         method: 'POST',
         body: JSON.stringify({
@@ -19,22 +19,27 @@ function getRegister(){
         }
     })
     .then(res => res.json())
-    .then(r => console.log(r))
+    .then(r => {
+        localStorage.setItem('accessToken' , res.accessToken)
+        localStorage.setItem('refreshToken' , res.refreshToken)
+        localStorage.setItem('userId' , res.user.id)
+        if(res.user.isActivated){
+            window.open('../index.html' , '_self')
+            localStorage.setItem('isActivated' , res.user.isActivated)
+        }
+    })
+    .finally(() => {
+        $submit.disabled = false
+    })
 
 }
 
-$btnRegister.addEventListener('click' , e => {
+
+
+$submit.addEventListener('click' , e => {
     e.preventDefault()
 
-
-    if($email.value.length === 0 || $password.value.length === 0){
-        if($email.value.length === 0){
-            $email.classList.add('active')
-        }
-        if($password.value.length === 0){
-            $password.classList.add('active')
-        }
-    }else{
-        getRegister()
-    }
+    $submit.disabled = true
+    getAuth()
+    
 })
