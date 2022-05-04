@@ -2,7 +2,7 @@ const $email = document.querySelector('.emailInput')
 const $password = document.querySelector('.passwordInput')
 const $btnRegister = document.querySelector('.btnRegister')
 
-const base_url = 'https://todo-itacademy.herokuapp.com/'
+const base_url = 'https://todo-itacademy.herokuapp.com/api'
 
 // https://todo-itacademy.herokuapp.com/api/registration
 // https://todo-itacademy.herokuapp.com/api/login
@@ -35,13 +35,13 @@ function getRegister(){
 
 }
 
-window.addEventListener('DOMContentLoaded' , () => {
-    const accessToken = localStorage.getItem('accessToken')
+// window.addEventListener('DOMContentLoaded' , () => {
+//     const accessToken = localStorage.getItem('accessToken')
 
-    if(accessToken){
-        window.open('./auth.html' , '_self')
-    }
-})
+//     if(accessToken){
+//         window.open('./auth.html' , '_self')
+//     }
+// })
 
 $btnRegister.addEventListener('click' , e => {
     e.preventDefault()

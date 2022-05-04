@@ -19,11 +19,11 @@ function getAuth(){
         }
     })
     .then(res => res.json())
-    .then(r => {
+    .then(res => {
         localStorage.setItem('accessToken' , res.accessToken)
         localStorage.setItem('refreshToken' , res.refreshToken)
-        localStorage.setItem('userId' , res.user.id)
-        if(res.user.isActivated){
+        localStorage.setItem('userId' , res.userId)
+        if(!res.user.isActivated){
             window.open('../index.html' , '_self')
             localStorage.setItem('isActivated' , res.user.isActivated)
         }
