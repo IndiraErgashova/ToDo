@@ -5,6 +5,8 @@ const $submit = document.querySelector('.submit')
 const $container = document.querySelector('.row')
 const $loader = document.querySelector('.loader')
 const $signOut = document.querySelector('.signOut')
+const $allInputs = document.querySelectorAll('.form div input')
+
 
 
 const base = 'https://todo-itacademy.herokuapp.com/api'
@@ -87,7 +89,7 @@ function getSingleTodo(id){
 function createTodos(title , content , date){
     $submit.disabled = true
 
-    requests.post(`${base}/todos/create` , accessToken , {title , content , date})
+    requests.post(`${base}/todos/create` , accessToken , getValueFromInputs())
     .then(() => getTodos())
     .finally(() => $submit.disabled = false)
 }
@@ -157,6 +159,36 @@ function editTodo(id){
     })
 }
 
+
+
+function isValidate(){
+    $allInputs.forEach(item => {
+        item.value.length === 0 
+        ? item.classList.add('border-danger')
+        : item.classList.remove('border-danger')
+    })
+
+    return [...$allInputs].every(item => item.value)
+}
+
+
+function getValueFromInputs(){
+    return [...$allInputs].reduce((object , input) => {
+        return {
+            ...object,
+            [input.name]:input.value
+        }
+    } , {})
+}
+
+console.log(getValueFromInputs());
+$submit.addEventListener('click' , e => {
+    e.preventDefault()
+
+    $submit.disabled = true
+
+    isValidate() && createTodos()
+})
 
 // --------Get refresh-----------
 

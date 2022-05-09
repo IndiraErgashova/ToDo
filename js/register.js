@@ -1,7 +1,7 @@
 const $email = document.querySelector('.emailInput')
 const $password = document.querySelector('.passwordInput')
 const $btnRegister = document.querySelector('.btnRegister')
-
+const $allInputs = document.querySelector('.card div input')
 const base_url = 'https://todo-itacademy.herokuapp.com/api'
 
 // https://todo-itacademy.herokuapp.com/api/registration
@@ -13,10 +13,7 @@ const base_url = 'https://todo-itacademy.herokuapp.com/api'
 function getRegister(){
     fetch(`${base_url}/registration`, {
         method: 'POST',
-        body: JSON.stringify({
-            email: $email.value,
-            password: $password.value
-        }),
+        body: JSON.stringify(getValueFromInputs()),
         headers: {
             'Content-type':'application/json'
         }
@@ -35,17 +32,40 @@ function getRegister(){
 
 }
 
-// window.addEventListener('DOMContentLoaded' , () => {
-//     const accessToken = localStorage.getItem('accessToken')
 
-//     if(accessToken){
-//         window.open('./auth.html' , '_self')
-//     }
-// })
 
 $btnRegister.addEventListener('click' , e => {
     e.preventDefault()
 
     $btnRegister.disabled = true
-    getRegister()
+    isValidate() && getRegister()
 })
+
+
+window.addEventListener('DOMContentLoaded' , () => {
+    const accessToken = localStorage.getItem('accessToken')
+
+    if(accessToken){
+        window.open('../auth.html' , '_self')
+    }
+})
+
+function isValidate(){
+    $allInputs.forEach(item => {
+        item.value.length === 0 
+        ? item.classList.add('border-danger')
+        : item.classList.remove('border-danger')
+    })
+
+    return [...$allInputs].every(item => item.value)
+}
+
+
+function getValueFromInputs(){
+    return [...$allInputs].reduce((object , input) => {
+        return {
+            ...object,
+            [input.name]:input.value
+        }
+    } , {})
+}
